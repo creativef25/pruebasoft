@@ -25,19 +25,19 @@ class TwCorporativos extends Model
       return $this->belongsTo('App\TwUsuarios');
     }
 
-    public function twEmpreCorp(){
+    public function twEmpresasCorporativos(){
       return $this->hasMany('App\TwEmpresasCorporativos');
     }
 
-    public function twContCorp(){
+    public function twContactosCorporativos(){
       return $this->hasMany('App\TwContactosCorporativos');
     }
 
-    public function twContraCorp(){
+    public function TwContratosCorporativos(){
       return $this->hasMany('App\TwContratosCorporativos');
     }
 
-    public function twDocu(){
+    public function twDocumentos(){
       return $this->belongsToMany('App\TwDocumentos', 'tw_documentos_corporativos');
     }
 }

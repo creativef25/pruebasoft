@@ -21,7 +21,7 @@ class TwUsuarios extends Model
       'updated_at', 'deleted_at'
     ];
 
-    public function twCorpo(){
+    public function twCorporativos(){
       return $this->hasMany('App\TwCorporativos');
     }
 }

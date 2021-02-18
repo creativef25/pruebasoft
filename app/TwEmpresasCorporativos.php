@@ -21,7 +21,7 @@ class TwEmpresasCorporativos extends Model
       'S_Comentarios', 'tw_corporativos_id', 'created_at', 'updated_at', 'deleted_at'
     ];
 
-    public function twCorp(){
+    public function twCorporativos(){
       return $this->belongsTo('App\TwCorporativos');
     }
 }

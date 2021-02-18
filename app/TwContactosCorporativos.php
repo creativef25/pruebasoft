@@ -13,7 +13,7 @@ class TwContactosCorporativos extends Model
       'S_Email', 'tw_corporativos_id'
     ];
 
-    public function twCorp(){
+    public function twCorporativos(){
       return $this->belongsTo('App\TwCorporativos');
     }
 }

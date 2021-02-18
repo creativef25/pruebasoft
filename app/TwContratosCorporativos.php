@@ -12,7 +12,7 @@ class TwContratosCorporativos extends Model
       'id', 'D_FechaInicio', 'D_FechaFin', 'S_URLContrato','tw_corporativos_id'
     ];
 
-    public function twCorp(){
+    public function twCorporativos(){
       return $this->belongsTo('App\TwCorporativos');
     }
 }
