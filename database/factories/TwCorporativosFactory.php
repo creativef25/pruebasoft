@@ -6,6 +6,7 @@ use App\Model;
 use Faker\Generator as Faker;
 
 $factory->define(App\TwCorporativos::class, function (Faker $faker) {
+  $unixTimestamp = '1461067200';
     return [
         'S_NombreCorto' => $faker->companySuffix,
         'S_NombreCompleto' => $faker->company,
@@ -15,6 +16,7 @@ $factory->define(App\TwCorporativos::class, function (Faker $faker) {
         'S_DBPassword' => $faker->password,
         'S_SystemUrl' => $faker->url,
         'S_Activo' => $faker->boolean,
+        'D_FechaIncorporacion' => $faker->dateTime($unixTimestamp),
         'tw_usuarios_id' => factory(App\TwUsuarios::class)
     ];
 });
