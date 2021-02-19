@@ -20,10 +20,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login', [AuthController::class, 'login']);
-Route::apiResource('usuarios', API\TwUsuariosController::class)->middleware('auth:api');
+Route::group(['middleware' => 'auth:api'], function(){
+  Route::apiResource('usuarios', API\TwUsuariosController::class);
+  Route::apiResource('empresas-corporativos', API\TwEmpresasCorController::class);
+  Route::apiResource('documentos-corporativos', API\TwDocumentosCorController::class);
+  Route::apiResource('documentos', API\TwDocumentosController::class);
+  Route::apiResource('corporativos', API\TwCorporativosController::class);
+  Route::apiResource('contratos-corporativos', API\TwContratosCorpController::class);
+  Route::apiResource('contactos-corporativos', API\TwContactosCorpController::class);
+
+});
+
+/*Route::apiResource('usuarios', API\TwUsuariosController::class)->middleware('auth:api');
 Route::apiResource('empresas-corporativos', API\TwEmpresasCorController::class)->middleware('auth:api');
 Route::apiResource('documentos-corporativos', API\TwDocumentosCorController::class)->middleware('auth:api');
 Route::apiResource('documentos', API\TwDocumentosController::class)->middleware('auth:api');
 Route::apiResource('corporativos', API\TwCorporativosController::class)->middleware('auth:api');
 Route::apiResource('contratos-corporativos', API\TwContratosCorpController::class)->middleware('auth:api');
-Route::apiResource('contactos-corporativos', API\TwContactosCorpController::class)->middleware('auth:api');
+Route::apiResource('contactos-corporativos', API\TwContactosCorpController::class)->middleware('auth:api');*/
