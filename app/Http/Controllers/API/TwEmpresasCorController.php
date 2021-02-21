@@ -18,7 +18,7 @@ class TwEmpresasCorController extends Controller
     public function index()
     {
         $empre_cor = TwEmpresasCorporativos::all();
-        return response(['usuarios' => ProjectResource::collection($empre_cor), 'mensaje' => 'Exitoso'], 200);
+        return response(['empresa_corporativos' => $empre_cor, 'mensaje' => 'Exitoso'], 200);
     }
 
     /**
@@ -29,7 +29,19 @@ class TwEmpresasCorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+          'S_RazonSocial' => 'required',
+          'S_RFC' => 'required',
+          'S_Activo' => 'required',
+          'tw_corporativos_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+          return response(['error' => $validator->errors(), 'Error de Validacion']);
+        }
+
+        $tw_empre_corpo = TwEmpresasCorporativos::create($request->all());
+        return response(['empresa_corporativos' => $tw_empre_corpo, 'message' => 'Creacion Exitosa'], 201);
     }
 
     /**
@@ -47,7 +59,7 @@ class TwEmpresasCorController extends Controller
           }
 
 
-          return response(['usuarios' => new ProjectResource($empre_cor), 'message' => 'Extraido Exitosamente'], 200);
+          return response(['empresa_corporativos' => $empre_cor, 'message' => 'Extraido Exitosamente'], 200);
     }
 
     /**
@@ -57,9 +69,26 @@ class TwEmpresasCorController extends Controller
      * @param  \App\TwEmpresasCorporativos  $twEmpresasCorporativos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TwEmpresasCorporativos $twEmpresasCorporativos)
+    public function update(Request $request, $id)
     {
-        //
+      $validator = Validator::make($request->all(), [
+        'S_RazonSocial' => 'required',
+        'S_RFC' => 'required',
+        'S_Activo' => 'required',
+        'tw_corporativos_id' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+        return response(['error' => $validator->errors(), 'Error de Validacion']);
+      } else {
+        $tw_empre_corpo = TwEmpresasCorporativos::whereId($id)->update([
+                                                                        'S_RazonSocial' => $request->S_RazonSocial,
+                                                                        'S_RFC' => $request->S_RFC,
+                                                                        'S_Activo' => $request->S_Activo,
+                                                                        'tw_corporativos_id' => $request->tw_corporativos_id
+                                                                      ]);
+        return response(['message' => 'Actualizacion Exitosa'], 201);
+      }
     }
 
     /**

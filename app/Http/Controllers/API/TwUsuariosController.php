@@ -18,7 +18,7 @@ class TwUsuariosController extends Controller
     public function index()
     {
         $usuarios = TwUsuarios::all();
-        return response(['usuarios' => ProjectResource::collection($usuarios), 'mensaje' => 'Exitoso'], 200);
+        return response(['usuarios' => $usuarios, 'mensaje' => 'Exitoso'], 200);
     }
 
     /**
@@ -56,14 +56,9 @@ class TwUsuariosController extends Controller
     public function show($id)
     {
 
-      $usuario = TwUsuarios::find($id);
+      $usuario = TwUsuarios::findOrFail($id);
 
-      if (is_null($usuario)) {
-            return $this->sendError('Usuario no encontrado.');
-        }
-
-
-        return response(['usuarios' => new ProjectResource($usuario), 'message' => 'Extraido Exitosamente'], 200);
+      return response(['usuarios' => $usuario, 'message' => 'Extraido Exitosamente'], 200);
     }
 
     /**

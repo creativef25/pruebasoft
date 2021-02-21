@@ -8,6 +8,8 @@ class TwContratosCorporativos extends Model
 {
     protected $table = "tw_contratos_corporativos";
 
+    public $timestamps = false;
+
     protected $fillable = [
       'id', 'D_FechaInicio', 'D_FechaFin', 'S_URLContrato','tw_corporativos_id'
     ];

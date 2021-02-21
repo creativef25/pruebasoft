@@ -18,7 +18,7 @@ class TwContratosCorpController extends Controller
     public function index()
     {
       $contra_corp = TwContratosCorporativos::all();
-      return response(['usuarios' => ProjectResource::collection($contra_corp), 'mensaje' => 'Exitoso'], 200);
+      return response(['contratos_corporativos' => $contra_corp, 'mensaje' => 'Exitoso'], 200);
     }
 
     /**
@@ -29,7 +29,18 @@ class TwContratosCorpController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+          'D_FechaInicio' => 'required',
+          'D_FechaFin' => 'required',
+          'tw_corporativos_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+          return response(['error' => $validator->errors(), 'Error de Validacion']);
+        }
+
+        $contra_corp = TwContratosCorporativos::create($request->all());
+        return response(['contratos_corporativos' => $contra_corp, 'message' => 'Creacion Exitosa'], 201);
     }
 
     /**
@@ -47,7 +58,7 @@ class TwContratosCorpController extends Controller
         }
 
 
-        return response(['usuarios' => new ProjectResource($contra_corp), 'message' => 'Extraido Exitosamente'], 200);
+        return response(['contratos_corporativos' => $contra_corp, 'message' => 'Extraido Exitosamente'], 200);
     }
 
     /**
@@ -57,9 +68,24 @@ class TwContratosCorpController extends Controller
      * @param  \App\TwContratosCorporativos  $twContratosCorporativos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TwContratosCorporativos $twContratosCorporativos)
+    public function update(Request $request, $id)
     {
-        //
+      $validator = Validator::make($request->all(), [
+        'D_FechaInicio' => 'required',
+        'D_FechaFin' => 'required',
+        'tw_corporativos_id' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+        return response(['error' => $validator->errors(), 'Error de Validacion']);
+      }else {
+        $contra_corp = TwContratosCorporativos::whereId($id)->update([
+                                                                       'D_FechaInicio' => $request->D_FechaInicio,
+                                                                       'D_FechaFin' => $request->D_FechaFin,
+                                                                       'tw_corporativos_id' => $request->tw_corporativos_id
+                                                                     ]);
+        return response(['message' => 'Actualizacion Exitosa'], 201);
+      }
     }
 
     /**

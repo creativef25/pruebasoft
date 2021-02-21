@@ -18,7 +18,7 @@ class TwContactosCorpController extends Controller
     public function index()
     {
       $contac_corp = TwContactosCorporativos::all();
-      return response(['usuarios' => ProjectResource::collection($contac_corp), 'mensaje' => 'Exitoso'], 200);
+      return response(['contactos_corporativos' => $contac_corp, 'mensaje' => 'Exitoso'], 200);
     }
 
     /**
@@ -29,7 +29,19 @@ class TwContactosCorpController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+          'S_Nombre' => 'required',
+          'S_Puesto' => 'required',
+          'S_Email' => 'required',
+          'tw_corporativos_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+          return response(['error' => $validator->errors(), 'Error de Validacion']);
+        }
+
+        $contac_corp = TwContactosCorporativos::create($request->all());
+        return response(['contactos_corporativos' => $contac_corp, 'message' => 'Creacion Exitosa'], 201);
     }
 
     /**
@@ -47,7 +59,7 @@ class TwContactosCorpController extends Controller
         }
 
 
-        return response(['usuarios' => new ProjectResource($contac_corp), 'message' => 'Extraido Exitosamente'], 200);
+        return response(['contactos_corporativos' => $contac_corp, 'message' => 'Extraido Exitosamente'], 200);
     }
 
     /**
@@ -57,9 +69,26 @@ class TwContactosCorpController extends Controller
      * @param  \App\TwContactosCorporativos  $twContactosCorporativos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TwContactosCorporativos $twContactosCorporativos)
+    public function update(Request $request, $id)
     {
-        //
+      $validator = Validator::make($request->all(), [
+        'S_Nombre' => 'required',
+        'S_Puesto' => 'required',
+        'S_Email' => 'required',
+        'tw_corporativos_id' => 'required',
+      ]);
+
+      if ($validator->fails()) {
+        return response(['error' => $validator->errors(), 'Error de Validacion']);
+      }else {
+        $contac_corp = TwContactosCorporativos::whereId($id)->update([
+                                                                      'S_Nombre' => $request->S_Nombre,
+                                                                      'S_Puesto' => $request->S_Puesto,
+                                                                      'S_Email' => $request->S_Email,
+                                                                      'tw_corporativos_id' => $request->tw_corporativos_id
+                                                                    ]);
+        return response(['message' => 'Actualizacion Exitosa'], 201);
+      }
     }
 
     /**

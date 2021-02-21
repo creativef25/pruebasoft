@@ -18,7 +18,7 @@ class TwDocumentosCorController extends Controller
     public function index()
     {
       $docu_corp = TwDocumentosCorporativos::all();
-      return response(['usuarios' => ProjectResource::collection($docu_corp), 'mensaje' => 'Exitoso'], 200);
+      return response(['documentos_corporativos' => $docu_corp, 'mensaje' => 'Exitoso'], 200);
     }
 
     /**
@@ -29,7 +29,17 @@ class TwDocumentosCorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+          'tw_corporativos_id' => 'required',
+          'tw_documentos_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+          return response(['error' => $validator->errors(), 'Error de Validacion']);
+        }
+
+        $tw_docu_corp = TwDocumentosCorporativos::create($request->all());
+        return response(['documentos_corporativos' => $tw_docu_corp, 'message' => 'Creacion Exitosa'], 201);
     }
 
     /**
@@ -40,14 +50,14 @@ class TwDocumentosCorController extends Controller
      */
     public function show($id)
     {
-      $docu_corp = TwUsuarios::find($id);
+      $docu_corp = TwDocumentosCorporativos::find($id);
 
       if (is_null($docu_corp)) {
             return $this->sendError('Usuario no encontrado.');
         }
 
 
-        return response(['usuarios' => new ProjectResource($docu_corp), 'message' => 'Extraido Exitosamente'], 200);
+        return response(['documentos_corporativos' => $docu_corp, 'message' => 'Extraido Exitosamente'], 200);
     }
 
     /**
@@ -57,9 +67,22 @@ class TwDocumentosCorController extends Controller
      * @param  \App\TwDocumentosCorporativos  $twDocumentosCorporativos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TwDocumentosCorporativos $twDocumentosCorporativos)
+    public function update(Request $request, $id)
     {
-        //
+      $validator = Validator::make($request->all(), [
+        'tw_corporativos_id' => 'required',
+        'tw_documentos_id' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+        return response(['error' => $validator->errors(), 'Error de Validacion']);
+      }else {
+        $docu_corp = TwDocumentosCorporativos::whereId($id)->update([
+                                                                     'tw_corporativos_id' => $request->tw_corporativos_id,
+                                                                     'tw_documentos_id' => $request->tw_documentos_id
+                                                                   ]);
+        return response(['message' => 'Actualizacion Exitosa'], 201);
+      }
     }
 
     /**

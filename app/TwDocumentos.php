@@ -12,6 +12,8 @@ class TwDocumentos extends Model
       'id', 'S_Nombre', 'N_Obligatorio', 'S_Descripcion'
     ];
 
+    public $timestamps = false;
+
     public function twDocumentos(){
       return $this->belongsToMany('App\TwCorporativos', 'tw_documentos_corporativos');
     }

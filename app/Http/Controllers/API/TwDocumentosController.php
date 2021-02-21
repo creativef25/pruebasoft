@@ -18,7 +18,7 @@ class TwDocumentosController extends Controller
     public function index()
     {
       $docu = TwDocumentos::all();
-      return response(['usuarios' => ProjectResource::collection($docu), 'mensaje' => 'Exitoso'], 200);
+      return response(['documentos' => $docu, 'mensaje' => 'Exitoso'], 200);
     }
 
     /**
@@ -29,7 +29,17 @@ class TwDocumentosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+          'S_Nombre' => 'required',
+          'N_Obligatorio' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+          return response(['error' => $validator->errors(), 'Error de Validacion']);
+        }
+
+        $docu = TwDocumentos::create($request->all());
+        return response(['documento' => $docu, 'message' => 'Creacion Exitosa'], 201);
     }
 
     /**
@@ -47,7 +57,7 @@ class TwDocumentosController extends Controller
         }
 
 
-        return response(['usuarios' => new ProjectResource($docu), 'message' => 'Extraido Exitosamente'], 200);
+        return response(['documento' => $docu, 'message' => 'Extraido Exitosamente'], 200);
     }
 
     /**
@@ -57,9 +67,22 @@ class TwDocumentosController extends Controller
      * @param  \App\TwDocumentos  $twDocumentos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TwDocumentos $twDocumentos)
+    public function update(Request $request, $id)
     {
-        //
+      $validator = Validator::make($request->all(),[
+        'S_Nombre' => 'required',
+        'N_Obligatorio' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+        return response(['error' => $validator->errors(), 'Error de Validacion']);
+      }else {
+        $docu = TwDocumentos::whereId($id)->update([
+                                                    'S_Nombre' => $request->S_Nombre,
+                                                    'N_Obligatorio' => $request->N_Obligatorio
+                                                  ]);
+        return response(['message' => 'Actualizacion Exitosa'], 201);
+      }
     }
 
     /**

@@ -18,7 +18,7 @@ class TwCorporativosController extends Controller
     public function index()
     {
         $corpo = TwCorporativos::all();
-        return response(['corporativo' => ProjectResource::collection($corpo), 'mensaje' => 'Exitoso'], 200);
+        return response(['corporativo' => $corpo, 'mensaje' => 'Exitoso'], 200);
     }
 
     /**
@@ -29,7 +29,24 @@ class TwCorporativosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+          'S_NombreCorto' => 'required',
+          'S_NombreCompleto' => 'required',
+          'S_DBName' => 'required',
+          'S_DBUsuario' => 'required',
+          'S_DBPassword' => 'required',
+          'S_SystemUrl' => 'required',
+          'S_Activo' => 'required',
+          'D_FechaIncorporacion' => 'required',
+          'tw_usuarios_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+          return response(['error' => $validator->errors(), 'Error de Validacion']);
+        }
+
+        $corpo =  TwCorporativos::create($request->all());
+        return response(['corporativos' => $corpo, 'message' => 'Creacion Exitosa'], 201);
     }
 
     /**
@@ -46,7 +63,7 @@ class TwCorporativosController extends Controller
               return $this->sendError('Usuario no encontrado.');
           }
 
-          return response(['usuarios' => new ProjectResource($corpo), 'message' => 'Extraido Exitosamente'], 200);
+          return response(['corporativos' => $corpo, 'message' => 'Extraido Exitosamente'], 200);
     }
 
     /**
@@ -56,9 +73,36 @@ class TwCorporativosController extends Controller
      * @param  \App\TwCorporativos  $twCorporativos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TwCorporativos $twCorporativos)
+    public function update(Request $request, $id)
     {
-        //
+      $validator = Validator::make($request->all(), [
+        'S_NombreCorto' => 'required',
+        'S_NombreCompleto' => 'required',
+        'S_DBName' => 'required',
+        'S_DBUsuario' => 'required',
+        'S_DBPassword' => 'required',
+        'S_SystemUrl' => 'required',
+        'S_Activo' => 'required',
+        'D_FechaIncorporacion' => 'required',
+        'tw_usuarios_id' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+        return response(['error' => $validator->errors(), 'Error de Validacion']);
+      }else {
+        $corpo = TwCorporativos::whereId($id)->update([
+                                                        'S_NombreCorto' => $request->S_NombreCorto,
+                                                        'S_NombreCompleto' => $request->S_NombreCompleto,
+                                                        'S_DBName' => $request->S_DBName,
+                                                        'S_DBUsuario' => $request->S_DBUsuario,
+                                                        'S_DBPassword' => $request->S_DBPassword,
+                                                        'S_SystemUrl' => $request->S_SystemUrl,
+                                                        'S_Activo' => $request->S_Activo,
+                                                        'D_FechaIncorporacion' => $request->D_FechaIncorporacion,
+                                                        'tw_usuarios_id' => $request->tw_usuarios_id
+                                                      ]);
+        return response(['message' => 'Actualizacion Exitosa'], 201);
+      }
     }
 
     /**
