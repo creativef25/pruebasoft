@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\AccionesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::apiResource('corporativos', API\TwCorporativosController::class);
   Route::apiResource('contratos-corporativos', API\TwContratosCorpController::class);
   Route::apiResource('contactos-corporativos', API\TwContactosCorpController::class);
-
+  Route::get('info-corporativo/{id}', [AccionesController::class, 'corporativoInfo']);
 });
 
 /*Route::apiResource('usuarios', API\TwUsuariosController::class)->middleware('auth:api');
