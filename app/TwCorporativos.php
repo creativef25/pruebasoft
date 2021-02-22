@@ -33,11 +33,12 @@ class TwCorporativos extends Model
       return $this->hasMany('App\TwContactosCorporativos');
     }
 
-    public function TwContratosCorporativos(){
+    public function twContratosCorporativos(){
       return $this->hasMany('App\TwContratosCorporativos');
     }
 
     public function twDocumentos(){
-      return $this->belongsToMany('App\TwDocumentos', 'tw_documentos_corporativos');
+      return $this->belongsToMany('App\TwDocumentos', 'tw_documentos_corporativos')
+                  ->withPivot('S_ArchivosUrl');
     }
 }

@@ -14,7 +14,7 @@ class TwDocumentos extends Model
 
     public $timestamps = false;
 
-    public function twDocumentos(){
-      return $this->belongsToMany('App\TwCorporativos', 'tw_documentos_corporativos');
+    public function twCorporativos(){
+      return $this->belongsToMany('App\TwCorporativos');
     }
 }
