@@ -30,10 +30,10 @@ class TwContactosCorpController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-          'S_Nombre' => 'required',
-          'S_Puesto' => 'required',
-          'S_Email' => 'required',
-          'tw_corporativos_id' => 'required',
+          'S_Nombre' => 'required|string|size:45',
+          'S_Puesto' => 'required|string|size:45',
+          'S_Email' => 'required|email|size:45',
+          'tw_corporativos_id' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -72,10 +72,10 @@ class TwContactosCorpController extends Controller
     public function update(Request $request, $id)
     {
       $validator = Validator::make($request->all(), [
-        'S_Nombre' => 'required',
-        'S_Puesto' => 'required',
-        'S_Email' => 'required',
-        'tw_corporativos_id' => 'required',
+        'S_Nombre' => 'required|string|size:45',
+        'S_Puesto' => 'required|string|size:45',
+        'S_Email' => 'required|email|size:45',
+        'tw_corporativos_id' => 'required|integer',
       ]);
 
       if ($validator->fails()) {

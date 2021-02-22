@@ -30,8 +30,8 @@ class TwDocumentosController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-          'S_Nombre' => 'required',
-          'N_Obligatorio' => 'required'
+          'S_Nombre' => 'required|string|size:45',
+          'N_Obligatorio' => 'required|boolean|size:1'
         ]);
 
         if ($validator->fails()) {
@@ -70,8 +70,8 @@ class TwDocumentosController extends Controller
     public function update(Request $request, $id)
     {
       $validator = Validator::make($request->all(),[
-        'S_Nombre' => 'required',
-        'N_Obligatorio' => 'required'
+        'S_Nombre' => 'required|string|size:45',
+        'N_Obligatorio' => 'required|boolean|size:1'
       ]);
 
       if ($validator->fails()) {

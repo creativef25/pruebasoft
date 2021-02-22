@@ -32,7 +32,7 @@ class TwContratosCorpController extends Controller
         $validator = Validator::make($request->all(), [
           'D_FechaInicio' => 'required',
           'D_FechaFin' => 'required',
-          'tw_corporativos_id' => 'required'
+          'tw_corporativos_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -73,7 +73,7 @@ class TwContratosCorpController extends Controller
       $validator = Validator::make($request->all(), [
         'D_FechaInicio' => 'required',
         'D_FechaFin' => 'required',
-        'tw_corporativos_id' => 'required'
+        'tw_corporativos_id' => 'required|integer'
       ]);
 
       if ($validator->fails()) {

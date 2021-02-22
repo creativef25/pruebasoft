@@ -32,11 +32,11 @@ class TwUsuariosController extends Controller
         $data  = $request->all();
 
         $validator = Validator::make($data,[
-          'username' => 'required',
-          'email' => 'email|required',
-          'S_Activo' => 'required',
-          'password' => 'required',
-          'verified' => 'required'
+          'username' => 'string|required|size:12',
+          'email' => 'email|required|size:45',
+          'S_Activo' => 'required|boolean|size:1',
+          'password' => 'required|password:api|size:100',
+          'verified' => 'required|string|size:191'
         ]);
 
         if ($validator->fails()) {
@@ -71,11 +71,11 @@ class TwUsuariosController extends Controller
     public function update(Request $request, $id)
     {
       $validator = Validator::make($request->all(),[
-        'username' => 'required',
-        'email' => 'email|required',
-        'S_Activo' => 'required',
-        'password' => 'required',
-        'verified' => 'required'
+        'username' => 'string|required|size:12',
+        'email' => 'email|required|size:45',
+        'S_Activo' => 'required|boolean|size:1',
+        'password' => 'required|password:api|size:100',
+        'verified' => 'required|string|size:191'
       ]);
 
       if ($validator->fails()) {

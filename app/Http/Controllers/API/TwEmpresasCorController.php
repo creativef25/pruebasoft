@@ -30,10 +30,10 @@ class TwEmpresasCorController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-          'S_RazonSocial' => 'required',
-          'S_RFC' => 'required',
-          'S_Activo' => 'required',
-          'tw_corporativos_id' => 'required'
+          'S_RazonSocial' => 'required|string|size:150',
+          'S_RFC' => 'required|string|size:13',
+          'S_Activo' => 'required|boolean|size:1',
+          'tw_corporativos_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -72,10 +72,10 @@ class TwEmpresasCorController extends Controller
     public function update(Request $request, $id)
     {
       $validator = Validator::make($request->all(), [
-        'S_RazonSocial' => 'required',
-        'S_RFC' => 'required',
-        'S_Activo' => 'required',
-        'tw_corporativos_id' => 'required'
+        'S_RazonSocial' => 'required|string|size:150',
+        'S_RFC' => 'required|string|size:13',
+        'S_Activo' => 'required|boolean|size:1',
+        'tw_corporativos_id' => 'required|integer'
       ]);
 
       if ($validator->fails()) {

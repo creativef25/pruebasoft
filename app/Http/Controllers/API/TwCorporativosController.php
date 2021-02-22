@@ -30,15 +30,15 @@ class TwCorporativosController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-          'S_NombreCorto' => 'required',
-          'S_NombreCompleto' => 'required',
-          'S_DBName' => 'required',
-          'S_DBUsuario' => 'required',
-          'S_DBPassword' => 'required',
-          'S_SystemUrl' => 'required',
-          'S_Activo' => 'required',
+          'S_NombreCorto' => 'required|string|size:45',
+          'S_NombreCompleto' => 'required|string|size:75',
+          'S_DBName' => 'required|string|size:45',
+          'S_DBUsuario' => 'required|string|size:45',
+          'S_DBPassword' => 'required|password|size:150',
+          'S_SystemUrl' => 'required|string|size:255',
+          'S_Activo' => 'required|boolean|size:1',
           'D_FechaIncorporacion' => 'required',
-          'tw_usuarios_id' => 'required'
+          'tw_usuarios_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -76,15 +76,15 @@ class TwCorporativosController extends Controller
     public function update(Request $request, $id)
     {
       $validator = Validator::make($request->all(), [
-        'S_NombreCorto' => 'required',
-        'S_NombreCompleto' => 'required',
-        'S_DBName' => 'required',
-        'S_DBUsuario' => 'required',
-        'S_DBPassword' => 'required',
-        'S_SystemUrl' => 'required',
-        'S_Activo' => 'required',
+        'S_NombreCorto' => 'required|string|size:45',
+        'S_NombreCompleto' => 'required|string|size:75',
+        'S_DBName' => 'required|string|size:45',
+        'S_DBUsuario' => 'required|string|size:45',
+        'S_DBPassword' => 'required|password|size:150',
+        'S_SystemUrl' => 'required|string|size:255',
+        'S_Activo' => 'required|boolean|size:1',
         'D_FechaIncorporacion' => 'required',
-        'tw_usuarios_id' => 'required'
+        'tw_usuarios_id' => 'required|integer'
       ]);
 
       if ($validator->fails()) {
