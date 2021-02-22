@@ -15,6 +15,7 @@ class TwDocumentos extends Model
     public $timestamps = false;
 
     public function twCorporativos(){
-      return $this->belongsToMany('App\TwCorporativos');
+      return $this->belongsToMany('App\TwCorporativos', 'tw_documentos_corporativos')
+                  ->withPivot('S_ArchivosUrl');
     }
 }

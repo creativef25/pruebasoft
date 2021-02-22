@@ -21,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('password/email', [AuthController::class, 'forgot']);
+Route::post('password/reset', [AuthController::class, 'reset']);
 Route::group(['middleware' => 'auth:api'], function(){
   Route::apiResource('usuarios', API\TwUsuariosController::class);
   Route::apiResource('empresas-corporativos', API\TwEmpresasCorController::class);
@@ -30,6 +32,8 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::apiResource('contratos-corporativos', API\TwContratosCorpController::class);
   Route::apiResource('contactos-corporativos', API\TwContactosCorpController::class);
   Route::get('info-corporativo/{id}', [AccionesController::class, 'corporativoInfo']);
+  Route::get('info-documento/{id}', [AccionesController::class, 'documentoInfo']);
+  Route::get('logout', [AuthController::class, 'logout']);
 });
 
 /*Route::apiResource('usuarios', API\TwUsuariosController::class)->middleware('auth:api');
